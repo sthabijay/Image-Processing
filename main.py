@@ -285,14 +285,16 @@ def getImages(pages: int=1, limit: int=10):
     files_scan = os.listdir(dir)
 
     files = ([f for f in files_scan if os.path.isfile(os.path.join(dir, f))])
-    file_count = len(files) 
+    file_count = len(files)
+    
+    offset = pages * limit - limit
     
     if(file_count < limit):
         limit = file_count
-        
+               
     response = {}
     
-    for file in files[pages-1:limit]:
+    for file in files[offset:pages*limit]:
          response.update({file: f"http://127.0.0.1:8000/static/images/{file}"})
     
     return response
